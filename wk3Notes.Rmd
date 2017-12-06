@@ -1,0 +1,39 @@
+---
+title: "Decision Tree Exercises"
+author: "Jean-Paul Courneya"
+date: "December 5, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data("iris"); library(ggplot2);library(caret)
+```
+```{r}
+irisPractice <- iris
+```
+```{r}
+names(irisPractice)
+table(irisPractice$Species)
+```
+
+```{r}
+inTrain <- createDataPartition(y = irisPractice$Species, 
+                               p =0.7, list = FALSE )
+training <- irisPractice[inTrain,]
+testing <- irisPractice[-inTrain,]
+dim(training);dim(testing)
+```
+```{r}
+qplot(Petal.Width,Sepal.Width,colour=Species,data = training)
+```
+
+```{r}
+library(caret)
+modFit <- train(Species ~ ., method ="rpart", data = training)
+print(modFit$finalModel)
+```
+
